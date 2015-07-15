@@ -12,10 +12,13 @@ import EventKit
 class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var tableView: UITableView!
+    
     let eventStore = EKEventStore()
     var calendars = [EKCalendar]()
     var remindersInCalendar = [String : [EKReminder]]()  // calendarIdentifier -> EKReminder
     var selectedSectionIndex: Int?
+    
+    var visibleHeaders = [Int: RemindersListHeaderView]()   // section -> headerView
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
@@ -78,17 +81,16 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if (indexPathsToInsert.count > 0) {
                 tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Top)
             }
+            tableView.endUpdates()
             
-            if selectedSectionIndex == nil {
-                UIView.animateWithDuration(0.3) { () -> Void in
+            UIView.animateWithDuration(0.3) { () -> Void in
+                if self.selectedSectionIndex == nil {
                     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-                }
-            } else {
-                UIView.animateWithDuration(0.3) { () -> Void in
-                    self.tableView.contentInset = UIEdgeInsetsMake(-sender.view!.frame.origin.y, 0, 0, 0)
+                } else {
+                    self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.rectForHeaderInSection(self.selectedSectionIndex!).origin.y, 0, 0, 0)
+                    self.tableView.contentOffset = CGPointMake(0, -self.tableView.contentInset.top)
                 }
             }
-            tableView.endUpdates()
         }
     }
     
@@ -126,7 +128,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         remindersInCalendar.removeAll()
         
         for calendar in calendars {
-            let predicate = eventStore.predicateForRemindersInCalendars([calendar])
+            let predicate = eventStore.predicateForIncompleteRemindersWithDueDateStarting(nil, ending: nil, calendars: [calendar])
             eventStore.fetchRemindersMatchingPredicate(predicate) { [unowned self] (remindersArray) -> Void in
                 dispatch_async(dispatch_get_main_queue()) { () -> Void in
                     self.remindersInCalendar[calendar.calendarIdentifier] = remindersArray
@@ -191,30 +193,43 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let calendar = calendars[section]
-        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as! RemindersListHeaderView
-
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "headerViewTapped:")
-        headerView.addGestureRecognizer(tapGestureRecognizer)
-
-        headerView.titleTextField.text = calendar.title
-        let numReminders = remindersInCalendar[calendar.calendarIdentifier]?.count
-        if let numReminders = numReminders {
-            headerView.countLabel.text = String(numReminders)
+        
+        var headerView = visibleHeaders[section]
+        if headerView == nil {
+            headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as? RemindersListHeaderView
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "headerViewTapped:")
+            headerView!.addGestureRecognizer(tapGestureRecognizer)
         }
-        
-        headerView.backgroundView!.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
-        headerView.layer.shadowColor = UIColor.blackColor().CGColor
-        headerView.layer.shadowOffset = CGSizeMake(0, -1)
-        headerView.layer.shadowOpacity = 0.2
-        headerView.layer.shadowPath = UIBezierPath(rect: headerView.bounds).CGPath
-        headerView.layer.shadowRadius = 4
-        headerView.layer.zPosition = CGFloat(section)
-        headerView.clipsToBounds = false
-        headerView.layer.masksToBounds = false
-        
-        headerView.tag = section
+
+        if let headerView = headerView {
+            headerView.titleTextField.text = calendar.title
+            let numReminders = remindersInCalendar[calendar.calendarIdentifier]?.count
+            if let numReminders = numReminders {
+                headerView.countLabel.text = String(numReminders)
+            }
+            
+            headerView.backgroundView!.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
+            headerView.layer.shadowColor = UIColor.blackColor().CGColor
+            headerView.layer.shadowOffset = CGSizeMake(0, -1)
+            headerView.layer.shadowOpacity = 0.2
+            headerView.layer.shadowPath = UIBezierPath(rect: headerView.bounds).CGPath
+            headerView.layer.shadowRadius = 4
+            headerView.layer.zPosition = CGFloat(section)
+            headerView.clipsToBounds = false
+            headerView.layer.masksToBounds = false
+            
+            headerView.tag = section
+        }
 
         return headerView
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        visibleHeaders[section] = view as? RemindersListHeaderView
+    }
+    
+    func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
+        visibleHeaders.removeValueForKey(section)
     }
 
 }
