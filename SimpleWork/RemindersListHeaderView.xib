@@ -4,16 +4,9 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RemindersListHeaderView" customModule="SimpleWork" customModuleProvider="target">
-            <connections>
-                <outlet property="countLabel" destination="SWj-az-ShZ" id="eMa-lp-176"/>
-                <outlet property="subtitleTextField" destination="rrF-Tv-rkj" id="S3p-Yx-eej"/>
-                <outlet property="titleTextField" destination="Uvz-FO-XPm" id="8hO-Hk-dcq"/>
-                <outlet property="view" destination="zE5-7z-iNz" id="DQb-5l-VeF"/>
-            </connections>
-        </placeholder>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="zE5-7z-iNz">
+        <view contentMode="scaleToFill" id="zE5-7z-iNz" customClass="RemindersListHeaderView" customModule="SimpleWork" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
@@ -53,6 +46,11 @@
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="countLabel" destination="SWj-az-ShZ" id="NsC-A1-357"/>
+                <outlet property="subtitleTextField" destination="rrF-Tv-rkj" id="EVx-4J-I1n"/>
+                <outlet property="titleTextField" destination="Uvz-FO-XPm" id="NLl-hf-vq7"/>
+            </connections>
             <point key="canvasLocation" x="805" y="467.5"/>
         </view>
     </objects>

@@ -16,15 +16,16 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     var calendars = [EKCalendar]()
     var remindersInCalendar = [String : [EKReminder]]()  // calendarIdentifier -> EKReminder
     var selectedSectionIndex: Int?
-    
-    var headerViewForCalendar = [String : RemindersListHeaderView]() // calendarIdentifier -> RemindersListHeaderView
-   
+
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        tableView.registerNib(UINib(nibName: "RemindersListHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "HeaderView")
+        
         tableView.separatorColor = UIColor(white: 0.0, alpha: 0.25)
         // TODO: Remove 56 magic number
         tableView.separatorInset = UIEdgeInsetsMake(0, 56, 0, 0)
@@ -77,7 +78,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if (indexPathsToInsert.count > 0) {
                 tableView.insertRowsAtIndexPaths(indexPathsToInsert, withRowAnimation: UITableViewRowAnimation.Top)
             }
-            tableView.endUpdates()
             
             if selectedSectionIndex == nil {
                 UIView.animateWithDuration(0.3) { () -> Void in
@@ -88,6 +88,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                     self.tableView.contentInset = UIEdgeInsetsMake(-sender.view!.frame.origin.y, 0, 0, 0)
                 }
             }
+            tableView.endUpdates()
         }
     }
     
@@ -190,33 +191,29 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let calendar = calendars[section]
-        var headerView = headerViewForCalendar[calendar.calendarIdentifier]
-        if headerView == nil {
-            headerView = RemindersListHeaderView()
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "headerViewTapped:")
-            headerView!.addGestureRecognizer(tapGestureRecognizer)
-            headerViewForCalendar[calendar.calendarIdentifier] = headerView
+        let headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as! RemindersListHeaderView
+
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "headerViewTapped:")
+        headerView.addGestureRecognizer(tapGestureRecognizer)
+
+        headerView.titleTextField.text = calendar.title
+        let numReminders = remindersInCalendar[calendar.calendarIdentifier]?.count
+        if let numReminders = numReminders {
+            headerView.countLabel.text = String(numReminders)
         }
         
-        if let headerView = headerView {
-            headerView.titleTextField.text = calendar.title
-            let numReminders = remindersInCalendar[calendar.calendarIdentifier]?.count
-            if let numReminders = numReminders {
-                headerView.countLabel.text = String(numReminders)
-            }
-            headerView.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
-            headerView.layer.shadowColor = UIColor.blackColor().CGColor
-            headerView.layer.shadowOffset = CGSizeMake(0, -1)
-            headerView.layer.shadowOpacity = 0.2
-            headerView.layer.shadowPath = UIBezierPath(rect: headerView.bounds).CGPath
-            headerView.layer.shadowRadius = 4
-            headerView.layer.zPosition = CGFloat(section)
-            headerView.clipsToBounds = false
-            headerView.layer.masksToBounds = false
-            
-            headerView.tag = section
-        }
+        headerView.backgroundView!.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
+        headerView.layer.shadowColor = UIColor.blackColor().CGColor
+        headerView.layer.shadowOffset = CGSizeMake(0, -1)
+        headerView.layer.shadowOpacity = 0.2
+        headerView.layer.shadowPath = UIBezierPath(rect: headerView.bounds).CGPath
+        headerView.layer.shadowRadius = 4
+        headerView.layer.zPosition = CGFloat(section)
+        headerView.clipsToBounds = false
+        headerView.layer.masksToBounds = false
         
+        headerView.tag = section
+
         return headerView
     }
 
