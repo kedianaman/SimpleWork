@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+    </dependencies>
+    <scenes>
+        <!--Main Table View Controller-->
+        <scene sceneID="qqt-c5-lut">
+            <objects>
+                <viewController id="Vcx-qw-8Sw" customClass="MainTableViewController" customModule="SimpleWork" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="nJz-Tp-DME"/>
+                        <viewControllerLayoutGuide type="bottom" id="lmu-fR-Ht5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="L6Y-ZV-l9w">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="157" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="k8V-Dt-LHh">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentCell" rowHeight="66" id="EZa-lb-Sya" customClass="AssignmentTableViewCell" customModule="SimpleWork" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="66"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EZa-lb-Sya" id="fkR-i8-eDE">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Title" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-El-kiv">
+                                                    <rect key="frame" x="56" y="12" width="534" height="24"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                </textField>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="530" translatesAutoresizingMaskIntoConstraints="NO" id="jLQ-TH-ubj">
+                                                    <rect key="frame" x="56" y="38" width="32" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5v1-Kt-6Pl">
+                                                    <rect key="frame" x="16" y="21" width="24" height="23.5"/>
+                                                    <state key="normal" backgroundImage="Checkbox Unchecked"/>
+                                                    <connections>
+                                                        <action selector="checkBoxTapped:" destination="EZa-lb-Sya" eventType="touchUpInside" id="g9e-wS-Awm"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="jLQ-TH-ubj" firstAttribute="leading" secondItem="JFM-El-kiv" secondAttribute="leading" id="45K-tg-mbF"/>
+                                                <constraint firstItem="JFM-El-kiv" firstAttribute="leading" secondItem="5v1-Kt-6Pl" secondAttribute="trailing" constant="16" id="DAY-4s-kd5"/>
+                                                <constraint firstItem="jLQ-TH-ubj" firstAttribute="top" secondItem="JFM-El-kiv" secondAttribute="bottom" constant="2" id="Eu1-kM-ylH"/>
+                                                <constraint firstAttribute="trailing" secondItem="JFM-El-kiv" secondAttribute="trailing" constant="10" id="I8Q-Xg-LLC"/>
+                                                <constraint firstAttribute="bottom" secondItem="5v1-Kt-6Pl" secondAttribute="bottom" constant="21" id="d1C-RC-gdb"/>
+                                                <constraint firstItem="JFM-El-kiv" firstAttribute="leading" secondItem="fkR-i8-eDE" secondAttribute="leading" constant="56" id="huE-nO-Sy9"/>
+                                                <constraint firstItem="JFM-El-kiv" firstAttribute="top" secondItem="fkR-i8-eDE" secondAttribute="top" constant="12" id="j34-vg-nyC"/>
+                                                <constraint firstItem="5v1-Kt-6Pl" firstAttribute="leading" secondItem="fkR-i8-eDE" secondAttribute="leading" constant="16" id="wAg-iH-r1q"/>
+                                                <constraint firstItem="5v1-Kt-6Pl" firstAttribute="top" secondItem="fkR-i8-eDE" secondAttribute="top" constant="21" id="xM5-kx-Eha"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.54901960780000003" green="0.27450980390000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                                        <accessibility key="accessibilityConfiguration">
+                                            <accessibilityTraits key="traits" notEnabled="YES"/>
+                                        </accessibility>
+                                        <connections>
+                                            <outlet property="assignmentTitleTextField" destination="JFM-El-kiv" id="vDR-UE-Afm"/>
+                                            <outlet property="dateLabel" destination="jLQ-TH-ubj" id="Jle-uU-1UL"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Vcx-qw-8Sw" id="Xee-Ed-7xt"/>
+                                    <outlet property="delegate" destination="Vcx-qw-8Sw" id="Fzq-MR-QSQ"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k8V-Dt-LHh" firstAttribute="leading" secondItem="L6Y-ZV-l9w" secondAttribute="leading" id="LTH-CX-Z9V"/>
+                            <constraint firstItem="lmu-fR-Ht5" firstAttribute="top" secondItem="k8V-Dt-LHh" secondAttribute="bottom" id="SIt-IT-IkT"/>
+                            <constraint firstAttribute="trailing" secondItem="k8V-Dt-LHh" secondAttribute="trailing" id="UYq-Mw-Oxf"/>
+                            <constraint firstItem="k8V-Dt-LHh" firstAttribute="top" secondItem="nJz-Tp-DME" secondAttribute="bottom" id="zxq-pH-dwK"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="tableView" destination="k8V-Dt-LHh" id="Xj6-fQ-4ob"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zKg-pp-5Bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-197" y="179"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Checkbox Unchecked" width="48" height="48"/>
+    </resources>
+</document>
