@@ -53,6 +53,12 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 // Show the newly selected section
                 selectedSectionIndex = sender.view!.tag
                 
+                for (index, header) in visibleHeaders {
+                    if index != selectedSectionIndex {
+                        header.setDimmed(true, animated: true)
+                    }
+                }
+                
                 let calendar = calendars[selectedSectionIndex!]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]!
                 
@@ -62,6 +68,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 
             } else {
                 // Collapse the currently selected section
+                for (_, header) in visibleHeaders {
+                    header.setDimmed(false, animated: true)
+                }
                 let calendar = calendars[selectedSectionIndex!]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]!
                 
