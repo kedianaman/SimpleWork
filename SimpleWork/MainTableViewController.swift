@@ -61,10 +61,12 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 
                 let calendar = calendars[selectedSectionIndex!]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]!
-                
-                for row in 0...reminders.count - 1  {
-                    indexPathsToInsert.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
+                if reminders.count > 0 {
+                    for row in 0...reminders.count - 1  {
+                        indexPathsToInsert.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
+                    }
                 }
+               
                 
             } else {
                 // Collapse the currently selected section
@@ -73,9 +75,11 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
                 let calendar = calendars[selectedSectionIndex!]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]!
-                
-                for row in 0...reminders.count - 1  {
-                    indexPathsToDelete.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
+                if reminders.count > 0 {
+                    for row in 0...reminders.count - 1  {
+                        indexPathsToDelete.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
+                    }
+
                 }
                 
                 selectedSectionIndex = nil

@@ -23,7 +23,10 @@ class RemindersListHeaderView: UITableViewHeaderFooterView {
             dimmedView.backgroundColor = UIColor.blackColor()
             dimmedView.alpha = 0.0
         }
+        countLabel.backgroundColor = UIColor(patternImage: UIImage(named: "Number Border")!)
     }
+    
+    
     
     func setDimmed(dimmed: Bool, animated: Bool) {
         var alphaToSet:CGFloat = 0.0
