@@ -48,19 +48,8 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             var indexPathsToInsert = [NSIndexPath]()
             var indexPathsToDelete = [NSIndexPath]()
-            
-            if selectedSectionIndex == sender.view!.tag {
-                // Collapse the currently selected section
-                let calendar = calendars[selectedSectionIndex!]
-                let reminders = remindersInCalendar[calendar.calendarIdentifier]!
-                
-                for row in 0...reminders.count - 1  {
-                    indexPathsToDelete.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
-                }
-                
-                selectedSectionIndex = nil
-            }
-            else if selectedSectionIndex == nil {
+       
+            if selectedSectionIndex == nil {
                 // Show the newly selected section
                 selectedSectionIndex = sender.view!.tag
                 
@@ -71,7 +60,17 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                     indexPathsToInsert.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
                 }
                 
+            } else {
+                // Collapse the currently selected section
+                let calendar = calendars[selectedSectionIndex!]
+                let reminders = remindersInCalendar[calendar.calendarIdentifier]!
                 
+                for row in 0...reminders.count - 1  {
+                    indexPathsToDelete.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
+                }
+                
+                selectedSectionIndex = nil
+
             }
             
             tableView.beginUpdates()
