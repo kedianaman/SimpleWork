@@ -22,10 +22,10 @@
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWj-az-ShZ">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWj-az-ShZ" customClass="RemindersCountLabel" customModule="SimpleWork" customModuleProvider="target">
                     <rect key="frame" x="540" y="29" width="44" height="44"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="44" id="o7w-fb-Rpc"/>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="o7w-fb-Rpc"/>
                         <constraint firstAttribute="height" constant="44" id="wCb-3F-sf7"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="24"/>

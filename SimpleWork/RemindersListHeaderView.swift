@@ -8,6 +8,14 @@
 
 import UIKit
 
+class RemindersCountLabel : UILabel {
+    override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
+        var bounds = super.textRectForBounds(bounds, limitedToNumberOfLines: numberOfLines)
+        bounds.size.width += 24.0
+        return bounds
+    }
+}
+
 class RemindersListHeaderView: UITableViewHeaderFooterView {
     
     @IBOutlet weak var titleTextField: UITextField!
@@ -23,7 +31,12 @@ class RemindersListHeaderView: UITableViewHeaderFooterView {
             dimmedView.backgroundColor = UIColor.blackColor()
             dimmedView.alpha = 0.0
         }
-        countLabel.backgroundColor = UIColor(patternImage: UIImage(named: "Number Border")!)
+        
+        countLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        countLabel.layer.cornerRadius = countLabel.frame.size.height/2.0
+        countLabel.layer.masksToBounds = true
+        
+//        countLabel.backgroundColor = UIColor(patternImage: UIImage(named: "Number Border")!)
     }
     
     func setDimmed(dimmed: Bool, animated: Bool) {
