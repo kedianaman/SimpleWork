@@ -2,6 +2,8 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Main Table View Controller-->
@@ -16,48 +18,77 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="157" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="k8V-Dt-LHh">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="257" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="k8V-Dt-LHh">
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentCell" rowHeight="66" id="EZa-lb-Sya" customClass="AssignmentTableViewCell" customModule="SimpleWork" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="22" width="600" height="66"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="ReminderCell" rowHeight="102" id="EZa-lb-Sya" customClass="ReminderTableViewCell" customModule="SimpleWork" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="600" height="102"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="EZa-lb-Sya" id="fkR-i8-eDE">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="101.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Title" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="JFM-El-kiv">
-                                                    <rect key="frame" x="56" y="12" width="534" height="24"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="20"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="530" translatesAutoresizingMaskIntoConstraints="NO" id="jLQ-TH-ubj">
-                                                    <rect key="frame" x="56" y="38" width="32" height="18"/>
-                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5v1-Kt-6Pl">
-                                                    <rect key="frame" x="16" y="21" width="24" height="23.5"/>
+                                                    <rect key="frame" x="16" y="39" width="24" height="23.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="5v1-Kt-6Pl" secondAttribute="height" multiplier="1:1" id="Rrl-9E-b4b"/>
+                                                        <constraint firstAttribute="width" constant="24" id="uHs-dp-I0j"/>
+                                                    </constraints>
                                                     <state key="normal" backgroundImage="Checkbox Unchecked"/>
                                                     <connections>
                                                         <action selector="checkBoxTapped:" destination="EZa-lb-Sya" eventType="touchUpInside" id="g9e-wS-Awm"/>
                                                     </connections>
                                                 </button>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" scrollEnabled="NO" text="Reminder Title" translatesAutoresizingMaskIntoConstraints="NO" id="rkE-Yh-RHz">
+                                                    <rect key="frame" x="56" y="12" width="520" height="41"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                                                </textView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Due date label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RED-eV-4c9" customClass="ReminderCellDetailLabel" customModule="SimpleWork" customModuleProvider="target">
+                                                    <rect key="frame" x="56" y="53" width="520" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" id="a4D-bj-fOl"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="a4D-bj-fOl"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Location based label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XuR-nc-7Ss" customClass="ReminderCellDetailLabel" customModule="SimpleWork" customModuleProvider="target">
+                                                    <rect key="frame" x="56" y="71.5" width="520" height="18"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" id="ncs-wj-kwQ"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="ncs-wj-kwQ"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="jLQ-TH-ubj" firstAttribute="leading" secondItem="JFM-El-kiv" secondAttribute="leading" id="45K-tg-mbF"/>
-                                                <constraint firstItem="JFM-El-kiv" firstAttribute="leading" secondItem="5v1-Kt-6Pl" secondAttribute="trailing" constant="16" id="DAY-4s-kd5"/>
-                                                <constraint firstItem="jLQ-TH-ubj" firstAttribute="top" secondItem="JFM-El-kiv" secondAttribute="bottom" constant="2" id="Eu1-kM-ylH"/>
-                                                <constraint firstAttribute="trailing" secondItem="JFM-El-kiv" secondAttribute="trailing" constant="10" id="I8Q-Xg-LLC"/>
-                                                <constraint firstAttribute="bottom" secondItem="5v1-Kt-6Pl" secondAttribute="bottom" constant="21" id="d1C-RC-gdb"/>
-                                                <constraint firstItem="JFM-El-kiv" firstAttribute="leading" secondItem="fkR-i8-eDE" secondAttribute="leading" constant="56" id="huE-nO-Sy9"/>
-                                                <constraint firstItem="JFM-El-kiv" firstAttribute="top" secondItem="fkR-i8-eDE" secondAttribute="top" constant="12" id="j34-vg-nyC"/>
+                                                <constraint firstItem="RED-eV-4c9" firstAttribute="leading" secondItem="rkE-Yh-RHz" secondAttribute="leading" id="8KT-7A-p6b"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="rkE-Yh-RHz" secondAttribute="trailing" constant="16" id="9bY-LQ-lE3"/>
+                                                <constraint firstItem="RED-eV-4c9" firstAttribute="top" secondItem="rkE-Yh-RHz" secondAttribute="bottom" id="9dn-Ci-eTX"/>
+                                                <constraint firstItem="5v1-Kt-6Pl" firstAttribute="centerY" secondItem="fkR-i8-eDE" secondAttribute="centerY" id="CFQ-1c-Mki"/>
+                                                <constraint firstItem="XuR-nc-7Ss" firstAttribute="top" secondItem="RED-eV-4c9" secondAttribute="bottom" id="RjK-M6-Jdu"/>
+                                                <constraint firstItem="XuR-nc-7Ss" firstAttribute="trailing" secondItem="RED-eV-4c9" secondAttribute="trailing" id="aPX-3h-NTp"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="XuR-nc-7Ss" secondAttribute="bottom" constant="4" id="gp0-Mg-3wr"/>
+                                                <constraint firstItem="RED-eV-4c9" firstAttribute="trailing" secondItem="rkE-Yh-RHz" secondAttribute="trailing" id="juq-kH-rAN"/>
+                                                <constraint firstItem="rkE-Yh-RHz" firstAttribute="top" secondItem="fkR-i8-eDE" secondAttribute="topMargin" constant="4" id="n93-Zo-dRb"/>
                                                 <constraint firstItem="5v1-Kt-6Pl" firstAttribute="leading" secondItem="fkR-i8-eDE" secondAttribute="leading" constant="16" id="wAg-iH-r1q"/>
-                                                <constraint firstItem="5v1-Kt-6Pl" firstAttribute="top" secondItem="fkR-i8-eDE" secondAttribute="top" constant="21" id="xM5-kx-Eha"/>
+                                                <constraint firstItem="XuR-nc-7Ss" firstAttribute="leading" secondItem="RED-eV-4c9" secondAttribute="leading" id="wWl-K5-beb"/>
+                                                <constraint firstItem="rkE-Yh-RHz" firstAttribute="leading" secondItem="5v1-Kt-6Pl" secondAttribute="trailing" constant="16" id="yxM-vN-Aks"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.54901960780000003" green="0.27450980390000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
@@ -65,8 +96,11 @@
                                             <accessibilityTraits key="traits" notEnabled="YES"/>
                                         </accessibility>
                                         <connections>
-                                            <outlet property="assignmentTitleTextField" destination="JFM-El-kiv" id="vDR-UE-Afm"/>
-                                            <outlet property="dateLabel" destination="jLQ-TH-ubj" id="Jle-uU-1UL"/>
+                                            <outlet property="dueDateLabel" destination="RED-eV-4c9" id="PzD-WG-e83"/>
+                                            <outlet property="dueDateLabelZeroHeightConstraint" destination="a4D-bj-fOl" id="43h-ns-FY8"/>
+                                            <outlet property="locationLabel" destination="XuR-nc-7Ss" id="LWr-h5-bFf"/>
+                                            <outlet property="locationLabelZeroHeightConstraint" destination="ncs-wj-kwQ" id="6eN-RJ-Kwm"/>
+                                            <outlet property="titleTextView" destination="rkE-Yh-RHz" id="NJX-Yu-Mjk"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -88,6 +122,49 @@
                         <outlet property="tableView" destination="k8V-Dt-LHh" id="Xj6-fQ-4ob"/>
                     </connections>
                 </viewController>
+                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentCell" rowHeight="66" id="MiM-s5-fSJ" customClass="AssignmentTableViewCell" customModule="SimpleWork" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="66"/>
+                    <autoresizingMask key="autoresizingMask"/>
+                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MiM-s5-fSJ" id="cGD-p8-Yye">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTh-8n-Fcq">
+                                <rect key="frame" x="16" y="21" width="24" height="23.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="hA7-y5-nKG"/>
+                                    <constraint firstAttribute="width" secondItem="TTh-8n-Fcq" secondAttribute="height" multiplier="1:1" id="nZQ-JY-pyv"/>
+                                </constraints>
+                                <state key="normal" backgroundImage="Checkbox Unchecked"/>
+                                <connections>
+                                    <action selector="checkBoxTapped:" destination="MiM-s5-fSJ" eventType="touchUpInside" id="paj-d7-Lz2"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OUI-kV-FrR">
+                                <rect key="frame" x="62" y="8" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="leading" secondItem="cGD-p8-Yye" secondAttribute="leading" constant="16" id="Fe7-1D-XSJ"/>
+                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="centerY" secondItem="cGD-p8-Yye" secondAttribute="centerY" id="GKh-bh-yXr"/>
+                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="top" secondItem="cGD-p8-Yye" secondAttribute="top" constant="21" id="rjJ-d8-DSD"/>
+                            <constraint firstAttribute="bottom" secondItem="TTh-8n-Fcq" secondAttribute="bottom" constant="8" symbolic="YES" id="t3Y-tK-Bhb"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="t3Y-tK-Bhb"/>
+                                <exclude reference="rjJ-d8-DSD"/>
+                            </mask>
+                        </variation>
+                    </tableViewCellContentView>
+                    <color key="backgroundColor" red="0.54901960780000003" green="0.27450980390000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                    <accessibility key="accessibilityConfiguration">
+                        <accessibilityTraits key="traits" notEnabled="YES"/>
+                    </accessibility>
+                </tableViewCell>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zKg-pp-5Bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-197" y="179"/>

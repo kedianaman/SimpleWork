@@ -27,6 +27,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.estimatedRowHeight = 100
+        tableView.rowHeight = UITableViewAutomaticDimension
+        
         tableView.registerNib(UINib(nibName: "RemindersListHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "HeaderView")
         
         tableView.separatorColor = UIColor(white: 0.0, alpha: 0.25)
@@ -169,11 +172,16 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentCell", forIndexPath: indexPath) as? AssignmentTableViewCell {
+        if let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as? ReminderTableViewCell {
+            
+            cell.setDueDateText(nil)
+            cell.setLocationLabelText(nil)
+
+            
             let calendar = calendars[indexPath.section]
             let remindersForCalendar = remindersInCalendar[calendar.calendarIdentifier]
             let reminder = remindersForCalendar?[indexPath.row]
-            cell.assignmentTitleTextField.text = reminder?.title
+            cell.titleTextView.text = reminder?.title
             let dateComponents = reminder?.dueDateComponents
             if let dateComponents = dateComponents {
                 let formatter = NSDateFormatter()
@@ -182,10 +190,11 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 formatter.doesRelativeDateFormatting = true
                 
                 let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
-                cell.dateLabel.text = formatter.stringFromDate(date!)
-            } else {
-                cell.dateLabel.text = nil
+                if let date = date {
+                    cell.setDueDateText(formatter.stringFromDate(date))
+                }
             }
+            
             cell.backgroundColor = UIColor.cellColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
             
             return cell
@@ -194,9 +203,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return tableView.cellForRowAtIndexPath(indexPath)!
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return CGFloat(66)
-    }
+//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return CGFloat(66)
+//    }
 
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

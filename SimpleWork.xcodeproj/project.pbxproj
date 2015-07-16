@@ -14,7 +14,7 @@
 		ED0D12F61B537FDE00FCCE86 /* SimpleWorkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D12F51B537FDE00FCCE86 /* SimpleWorkTests.swift */; };
 		ED0D13011B537FDE00FCCE86 /* SimpleWorkUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D13001B537FDE00FCCE86 /* SimpleWorkUITests.swift */; };
 		ED0D13111B5380C900FCCE86 /* MainTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0D13101B5380C900FCCE86 /* MainTableViewController.swift */; };
-		ED2F04AB1B54537B00D50523 /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2F04AA1B54537B00D50523 /* AssignmentTableViewCell.swift */; };
+		ED2F04AB1B54537B00D50523 /* ReminderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED2F04AA1B54537B00D50523 /* ReminderTableViewCell.swift */; };
 		ED374DD61B54AC59001B41D4 /* UIColor+SimpleWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED374DD51B54AC59001B41D4 /* UIColor+SimpleWork.swift */; };
 		ED7F8BD01B560123003BB3EB /* RemindersListHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7F8BCF1B560123003BB3EB /* RemindersListHeaderView.swift */; };
 		ED7F8BD21B560132003BB3EB /* RemindersListHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = ED7F8BD11B560132003BB3EB /* RemindersListHeaderView.xib */; };
@@ -51,7 +51,7 @@
 		ED0D13001B537FDE00FCCE86 /* SimpleWorkUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleWorkUITests.swift; sourceTree = "<group>"; };
 		ED0D13021B537FDE00FCCE86 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		ED0D13101B5380C900FCCE86 /* MainTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTableViewController.swift; sourceTree = "<group>"; };
-		ED2F04AA1B54537B00D50523 /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		ED2F04AA1B54537B00D50523 /* ReminderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReminderTableViewCell.swift; sourceTree = "<group>"; };
 		ED374DD51B54AC59001B41D4 /* UIColor+SimpleWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+SimpleWork.swift"; sourceTree = "<group>"; };
 		ED7F8BCF1B560123003BB3EB /* RemindersListHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemindersListHeaderView.swift; sourceTree = "<group>"; };
 		ED7F8BD11B560132003BB3EB /* RemindersListHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = RemindersListHeaderView.xib; sourceTree = "<group>"; };
@@ -108,7 +108,7 @@
 				ED0D12E01B537FDD00FCCE86 /* AppDelegate.swift */,
 				ED0D13101B5380C900FCCE86 /* MainTableViewController.swift */,
 				ED0D12E41B537FDD00FCCE86 /* Main.storyboard */,
-				ED2F04AA1B54537B00D50523 /* AssignmentTableViewCell.swift */,
+				ED2F04AA1B54537B00D50523 /* ReminderTableViewCell.swift */,
 				ED7F8BCF1B560123003BB3EB /* RemindersListHeaderView.swift */,
 				ED7F8BD11B560132003BB3EB /* RemindersListHeaderView.xib */,
 				ED374DD51B54AC59001B41D4 /* UIColor+SimpleWork.swift */,
@@ -268,7 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ED2F04AB1B54537B00D50523 /* AssignmentTableViewCell.swift in Sources */,
+				ED2F04AB1B54537B00D50523 /* ReminderTableViewCell.swift in Sources */,
 				ED7F8BD01B560123003BB3EB /* RemindersListHeaderView.swift in Sources */,
 				ED0D13111B5380C900FCCE86 /* MainTableViewController.swift in Sources */,
 				ED0D12E11B537FDD00FCCE86 /* AppDelegate.swift in Sources */,
