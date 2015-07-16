@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8121.17" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8152.3" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8101.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8124.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -122,49 +122,6 @@
                         <outlet property="tableView" destination="k8V-Dt-LHh" id="Xj6-fQ-4ob"/>
                     </connections>
                 </viewController>
-                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="AssignmentCell" rowHeight="66" id="MiM-s5-fSJ" customClass="AssignmentTableViewCell" customModule="SimpleWork" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="66"/>
-                    <autoresizingMask key="autoresizingMask"/>
-                    <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MiM-s5-fSJ" id="cGD-p8-Yye">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="65.5"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TTh-8n-Fcq">
-                                <rect key="frame" x="16" y="21" width="24" height="23.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="hA7-y5-nKG"/>
-                                    <constraint firstAttribute="width" secondItem="TTh-8n-Fcq" secondAttribute="height" multiplier="1:1" id="nZQ-JY-pyv"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="Checkbox Unchecked"/>
-                                <connections>
-                                    <action selector="checkBoxTapped:" destination="MiM-s5-fSJ" eventType="touchUpInside" id="paj-d7-Lz2"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OUI-kV-FrR">
-                                <rect key="frame" x="62" y="8" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="leading" secondItem="cGD-p8-Yye" secondAttribute="leading" constant="16" id="Fe7-1D-XSJ"/>
-                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="centerY" secondItem="cGD-p8-Yye" secondAttribute="centerY" id="GKh-bh-yXr"/>
-                            <constraint firstItem="TTh-8n-Fcq" firstAttribute="top" secondItem="cGD-p8-Yye" secondAttribute="top" constant="21" id="rjJ-d8-DSD"/>
-                            <constraint firstAttribute="bottom" secondItem="TTh-8n-Fcq" secondAttribute="bottom" constant="8" symbolic="YES" id="t3Y-tK-Bhb"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="t3Y-tK-Bhb"/>
-                                <exclude reference="rjJ-d8-DSD"/>
-                            </mask>
-                        </variation>
-                    </tableViewCellContentView>
-                    <color key="backgroundColor" red="0.54901960780000003" green="0.27450980390000002" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
-                    <accessibility key="accessibilityConfiguration">
-                        <accessibilityTraits key="traits" notEnabled="YES"/>
-                    </accessibility>
-                </tableViewCell>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zKg-pp-5Bg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-197" y="179"/>

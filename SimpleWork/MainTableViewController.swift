@@ -29,6 +29,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.sectionHeaderHeight = 102
         
         tableView.registerNib(UINib(nibName: "RemindersListHeaderView", bundle: nil), forHeaderFooterViewReuseIdentifier: "HeaderView")
         
@@ -98,12 +99,18 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             tableView.endUpdates()
             
-            UIView.animateWithDuration(0.3) { () -> Void in
-                if self.selectedSectionIndex == nil {
-                    self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 0, 0)
-                } else {
-                    self.tableView.contentInset = UIEdgeInsetsMake(-self.tableView.rectForHeaderInSection(self.selectedSectionIndex!).origin.y, 0, 0, 0)
-                    self.tableView.contentOffset = CGPointMake(0, -self.tableView.contentInset.top)
+            if let selectedSectionIndex = self.selectedSectionIndex {
+                let rect = self.tableView.rectForSection(selectedSectionIndex)
+                if rect.size.height > self.tableView.bounds.size.height {
+                    self.tableView.setContentOffset(CGPointMake(0, self.tableView.rectForHeaderInSection(self.selectedSectionIndex!).origin.y), animated: true)
+                    UIView.animateWithDuration(0.3, animations: { () -> Void in
+                        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, rect.size.height, 0)
+                        }, completion: { (completed) -> Void in
+                            self.tableView.contentInset = UIEdgeInsetsZero
+                    })
+                }
+                else {
+                    self.tableView.scrollRectToVisible(rect, animated: true)
                 }
             }
         }
@@ -203,10 +210,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return tableView.cellForRowAtIndexPath(indexPath)!
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return CGFloat(101)
-    }
-
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let calendar = calendars[section]
         
