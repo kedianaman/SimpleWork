@@ -231,6 +231,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             headerView.layer.masksToBounds = false
             
             headerView.tag = section
+            
+            let dimmed = (selectedSectionIndex != nil) ? selectedSectionIndex! != section : false
+            headerView.setDimmed(dimmed, animated: false)
         }
 
         return headerView

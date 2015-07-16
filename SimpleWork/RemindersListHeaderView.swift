@@ -26,26 +26,11 @@ class RemindersListHeaderView: UITableViewHeaderFooterView {
         countLabel.backgroundColor = UIColor(patternImage: UIImage(named: "Number Border")!)
     }
     
-    
-    
     func setDimmed(dimmed: Bool, animated: Bool) {
-        var alphaToSet:CGFloat = 0.0
-        if dimmed == true {
-            alphaToSet = 0.75
-        }
-        if let dimmedView = dimmedView {
-            if animated == true {
-                UIView.animateWithDuration(0.4,
-                    delay: 0,
-                    options: UIViewAnimationOptions.CurveLinear,
-                    animations: { dimmedView.alpha = alphaToSet },
-                    completion: nil)
-            }
-            else {
-                dimmedView.alpha = alphaToSet
+        UIView.animateWithDuration(animated ? 0.3 : 0.0) { () -> Void in
+            if let dimmedView = self.dimmedView {
+                dimmedView.alpha = dimmed ? 0.75 : 0.0
             }
         }
-       
-        
     }
 }
