@@ -21,22 +21,14 @@ class RemindersListHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var subtitleTextField: UITextField!
     @IBOutlet weak var countLabel: UILabel!
-    var dimmedView: UIView?
+    @IBOutlet weak var dimmedView: UIView!
     
     override func awakeFromNib() {
         backgroundView = UIView(frame: self.bounds)
-        dimmedView = UIView(frame: self.bounds)
-        if let dimmedView = dimmedView {
-            self.addSubview(dimmedView)
-            dimmedView.backgroundColor = UIColor.blackColor()
-            dimmedView.alpha = 0.0
-        }
         
         countLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
         countLabel.layer.cornerRadius = countLabel.frame.size.height/2.0
         countLabel.layer.masksToBounds = true
-        
-//        countLabel.backgroundColor = UIColor(patternImage: UIImage(named: "Number Border")!)
     }
     
     func setDimmed(dimmed: Bool, animated: Bool) {

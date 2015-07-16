@@ -32,15 +32,23 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9wc-Dj-4Un">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="101"/>
+                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="9wc-Dj-4Un" secondAttribute="bottom" id="ARi-N8-15H"/>
                 <constraint firstAttribute="bottom" secondItem="rrF-Tv-rkj" secondAttribute="bottom" constant="16" id="BUA-fC-mTa"/>
+                <constraint firstAttribute="trailing" secondItem="9wc-Dj-4Un" secondAttribute="trailing" id="E3S-b6-iFD"/>
                 <constraint firstItem="Uvz-FO-XPm" firstAttribute="leading" secondItem="zE5-7z-iNz" secondAttribute="leading" constant="16" id="LFa-ow-f6e"/>
                 <constraint firstItem="Uvz-FO-XPm" firstAttribute="top" secondItem="zE5-7z-iNz" secondAttribute="top" constant="16" id="OZR-yh-cZe"/>
                 <constraint firstItem="SWj-az-ShZ" firstAttribute="leading" secondItem="Uvz-FO-XPm" secondAttribute="trailing" constant="8" symbolic="YES" id="P2R-Ib-Zd0"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="trailing" secondItem="Uvz-FO-XPm" secondAttribute="trailing" id="PI3-6V-w5P"/>
+                <constraint firstItem="9wc-Dj-4Un" firstAttribute="top" secondItem="zE5-7z-iNz" secondAttribute="top" id="PLU-0Y-Ncs"/>
                 <constraint firstAttribute="trailing" secondItem="SWj-az-ShZ" secondAttribute="trailing" constant="16" id="Ug8-04-Rps"/>
+                <constraint firstItem="9wc-Dj-4Un" firstAttribute="leading" secondItem="zE5-7z-iNz" secondAttribute="leading" id="k9T-UZ-Bxv"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="leading" secondItem="Uvz-FO-XPm" secondAttribute="leading" id="qDK-Gu-Yjs"/>
                 <constraint firstItem="SWj-az-ShZ" firstAttribute="centerY" secondItem="zE5-7z-iNz" secondAttribute="centerY" id="yoL-WN-Q05"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="top" secondItem="Uvz-FO-XPm" secondAttribute="bottom" constant="8" id="zdo-F5-aeA"/>
@@ -49,6 +57,7 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="countLabel" destination="SWj-az-ShZ" id="NsC-A1-357"/>
+                <outlet property="dimmedView" destination="9wc-Dj-4Un" id="NQg-NQ-hFW"/>
                 <outlet property="subtitleTextField" destination="rrF-Tv-rkj" id="EVx-4J-I1n"/>
                 <outlet property="titleTextField" destination="Uvz-FO-XPm" id="NLl-hf-vq7"/>
             </connections>
