@@ -203,11 +203,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return tableView.cellForRowAtIndexPath(indexPath)!
     }
     
-//    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return CGFloat(66)
-//    }
-
-    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return CGFloat(101)
     }
