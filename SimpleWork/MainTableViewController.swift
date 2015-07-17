@@ -183,7 +183,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             cell.setDueDateText(nil)
             cell.setLocationLabelText(nil)
-
             
             let calendar = calendars[indexPath.section]
             let remindersForCalendar = remindersInCalendar[calendar.calendarIdentifier]
@@ -226,6 +225,8 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if let numReminders = numReminders {
                 headerView.countLabel.text = String(numReminders)
             }
+            
+            headerView.subtitleTextField.text = calendar.source.title
             
             headerView.backgroundView!.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
             headerView.layer.shadowColor = UIColor.blackColor().CGColor
