@@ -43,13 +43,15 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         checkReminderAuthorizationStatus()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.contentInset = defaultContentInset()
+    }
+    
     // MARK: - UIGestures
-
     
     @IBAction func headerViewTapped(sender: UITapGestureRecognizer) {
         if (sender.state == UIGestureRecognizerState.Recognized) {
-            print("selected Index before starting : \(selectedSectionIndex)")
-            
             var indexPathsToInsert = [NSIndexPath]()
             var indexPathsToDelete = [NSIndexPath]()
        
@@ -101,12 +103,14 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             if let selectedSectionIndex = self.selectedSectionIndex {
                 let rect = self.tableView.rectForSection(selectedSectionIndex)
-                if rect.size.height > self.tableView.bounds.size.height {
+                if rect.size.height > tableViewVisibleBounds().size.height {
                     self.tableView.setContentOffset(CGPointMake(0, self.tableView.rectForHeaderInSection(self.selectedSectionIndex!).origin.y), animated: true)
                     UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        self.tableView.contentInset = UIEdgeInsetsMake(0, 0, rect.size.height, 0)
+                        var contentInset = self.defaultContentInset()
+                        contentInset.bottom += rect.size.height
+                        self.tableView.contentInset = contentInset
                         }, completion: { (completed) -> Void in
-                            self.tableView.contentInset = UIEdgeInsetsZero
+                            self.tableView.contentInset = self.defaultContentInset()
                     })
                 }
                 else {
@@ -114,6 +118,18 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 }
             }
         }
+    }
+    
+    // MARK: - Helper Methods
+    
+    private func defaultContentInset() -> UIEdgeInsets {
+        return UIEdgeInsetsMake(0, 0, view.bounds.size.height + topLayoutGuide.length, 0)
+    }
+    
+    private func tableViewVisibleBounds() -> CGRect {
+        var frame = tableView.frame
+        frame.size.height = view.bounds.size.height - topLayoutGuide.length
+        return frame
     }
     
     // MARK: - Getting Calendars / Reminders
@@ -160,7 +176,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
     }
     
-    // MARK: - Table view data source
+    // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -246,6 +262,8 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
         return headerView
     }
+    
+    // MARK: - Table View Delegate
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         visibleHeaders[section] = view as? RemindersListHeaderView
