@@ -65,10 +65,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                     }
                 }
                 
-                let calendar = calendars[selectedSectionIndex!]
-                let reminders = remindersInCalendar[calendar.calendarIdentifier]!
-                if reminders.count > 0 {
-                    for row in 0...reminders.count - 1  {
+                let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
+                if remindersCount > 0 {
+                    for row in 0...remindersCount - 1  {
                         indexPathsToInsert.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
                     }
                 }
@@ -79,10 +78,10 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 for (_, header) in visibleHeaders {
                     header.setDimmed(false, animated: true)
                 }
-                let calendar = calendars[selectedSectionIndex!]
-                let reminders = remindersInCalendar[calendar.calendarIdentifier]!
-                if reminders.count > 0 {
-                    for row in 0...reminders.count - 1  {
+                
+                let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
+                if remindersCount > 0 {
+                    for row in 0...remindersCount - 1  {
                         indexPathsToDelete.append(NSIndexPath(forRow: row, inSection: selectedSectionIndex!))
                     }
 
@@ -179,7 +178,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     // MARK: - Table View Data Source
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return calendars.count
     }
 
@@ -188,7 +186,11 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if section == selectedSectionIndex {
                 let calendar = calendars[section]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]
-                return reminders!.count
+                if reminders!.count > 0 {
+                    return reminders!.count
+                } else {
+                    return 1
+                }
             }
         }
         return 0
@@ -199,10 +201,15 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             
             cell.setDueDateText(nil)
             cell.setLocationLabelText(nil)
-            
             let calendar = calendars[indexPath.section]
             let remindersForCalendar = remindersInCalendar[calendar.calendarIdentifier]
-            let reminder = remindersForCalendar?[indexPath.row]
+            var reminder: EKReminder?
+            if let remindersForCalendar = remindersForCalendar {
+                if indexPath.row < remindersForCalendar.count {
+                    reminder = remindersForCalendar[indexPath.row]
+                }
+            }
+           
             cell.titleTextView.text = reminder?.title
             let dateComponents = reminder?.dueDateComponents
             if let dateComponents = dateComponents {
@@ -241,9 +248,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if let numReminders = numReminders {
                 headerView.countLabel.text = String(numReminders)
             }
-            
-            headerView.subtitleTextField.text = calendar.source.title
-            
+                        
             headerView.backgroundView!.backgroundColor = UIColor.headerColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
             headerView.layer.shadowColor = UIColor.blackColor().CGColor
             headerView.layer.shadowOffset = CGSizeMake(0, -1)
