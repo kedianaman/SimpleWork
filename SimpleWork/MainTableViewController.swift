@@ -197,37 +197,46 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as? ReminderTableViewCell {
-            
-            cell.setDueDateText(nil)
-            cell.setLocationLabelText(nil)
-            let calendar = calendars[indexPath.section]
-            let remindersForCalendar = remindersInCalendar[calendar.calendarIdentifier]
-            var reminder: EKReminder?
-            if let remindersForCalendar = remindersForCalendar {
-                if indexPath.row < remindersForCalendar.count {
-                    reminder = remindersForCalendar[indexPath.row]
-                }
+        
+        let calendar = calendars[indexPath.section]
+        let remindersForCalendar = remindersInCalendar[calendar.calendarIdentifier]
+        var reminder: EKReminder?
+        if let remindersForCalendar = remindersForCalendar {
+            if indexPath.row < remindersForCalendar.count {
+                reminder = remindersForCalendar[indexPath.row]
             }
-           
-            cell.titleTextView.text = reminder?.title
-            let dateComponents = reminder?.dueDateComponents
-            if let dateComponents = dateComponents {
-                let formatter = NSDateFormatter()
-                formatter.dateStyle = NSDateFormatterStyle.MediumStyle
-                formatter.timeStyle = NSDateFormatterStyle.ShortStyle
-                formatter.doesRelativeDateFormatting = true
+        }
+        if reminder != nil {
+            if let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as? ReminderTableViewCell {
                 
-                let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
-                if let date = date {
-                    cell.setDueDateText(formatter.stringFromDate(date))
+                cell.setDueDateText(nil)
+                cell.setLocationLabelText(nil)
+                
+                
+                cell.titleTextView.text = reminder?.title
+                let dateComponents = reminder?.dueDateComponents
+                if let dateComponents = dateComponents {
+                    let formatter = NSDateFormatter()
+                    formatter.dateStyle = NSDateFormatterStyle.MediumStyle
+                    formatter.timeStyle = NSDateFormatterStyle.ShortStyle
+                    formatter.doesRelativeDateFormatting = true
+                    
+                    let date = NSCalendar.currentCalendar().dateFromComponents(dateComponents)
+                    if let date = date {
+                        cell.setDueDateText(formatter.stringFromDate(date))
+                    }
                 }
-            }
-            
-            cell.backgroundColor = UIColor.cellColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
-            
-            return cell
+                
+                cell.backgroundColor = UIColor.cellColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
+                
+                return cell
 
+            }
+        
+        } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("Placeholder Cell", forIndexPath: indexPath)
+            cell.backgroundColor = UIColor.cellColorForCalendarColor(UIColor(CGColor: calendar.CGColor))
+            return cell
         }
         return tableView.cellForRowAtIndexPath(indexPath)!
     }

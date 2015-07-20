@@ -104,6 +104,37 @@
                                             <outlet property="titleTextView" destination="rkE-Yh-RHz" id="NJX-Yu-Mjk"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Placeholder Cell" rowHeight="44" id="pFZ-fc-Xrk">
+                                        <rect key="frame" x="0.0" y="124" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pFZ-fc-Xrk" id="0UX-jM-fo1">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="No Reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0n-eH-TqI" customClass="ReminderCellDetailLabel" customModule="SimpleWork" customModuleProvider="target">
+                                                    <rect key="frame" x="8" y="8" width="584" height="27.5"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" id="pG6-pS-r0c"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="0.84999999999999998" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="pG6-pS-r0c"/>
+                                                        </mask>
+                                                    </variation>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="H0n-eH-TqI" secondAttribute="trailing" id="Iy0-GZ-tNG"/>
+                                                <constraint firstItem="H0n-eH-TqI" firstAttribute="leading" secondItem="0UX-jM-fo1" secondAttribute="leadingMargin" id="QbC-kf-Jxc"/>
+                                                <constraint firstItem="H0n-eH-TqI" firstAttribute="top" secondItem="0UX-jM-fo1" secondAttribute="topMargin" id="beZ-Ow-O9r"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="H0n-eH-TqI" secondAttribute="bottom" id="mH5-6i-YFD"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="Vcx-qw-8Sw" id="Xee-Ed-7xt"/>
