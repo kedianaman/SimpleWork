@@ -22,6 +22,13 @@
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <textInputTraits key="textInputTraits"/>
                 </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CO-uK-6iR">
+                    <rect key="frame" x="476" y="29" width="44" height="44"/>
+                    <state key="normal" title="Add"/>
+                    <connections>
+                        <action selector="addReminder" destination="zE5-7z-iNz" eventType="touchUpInside" id="GTK-o1-B4Y"/>
+                    </connections>
+                </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWj-az-ShZ" customClass="RemindersCountLabel" customModule="SimpleWork" customModuleProvider="target">
                     <rect key="frame" x="540" y="29" width="44" height="44"/>
                     <constraints>
@@ -39,12 +46,16 @@
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="SWj-az-ShZ" firstAttribute="leading" secondItem="5CO-uK-6iR" secondAttribute="trailing" constant="20" id="2Nl-xD-HM6"/>
+                <constraint firstItem="5CO-uK-6iR" firstAttribute="width" secondItem="SWj-az-ShZ" secondAttribute="width" id="7uy-b6-OWh"/>
                 <constraint firstAttribute="bottom" secondItem="9wc-Dj-4Un" secondAttribute="bottom" id="ARi-N8-15H"/>
                 <constraint firstAttribute="bottom" secondItem="rrF-Tv-rkj" secondAttribute="bottom" constant="16" id="BUA-fC-mTa"/>
+                <constraint firstItem="5CO-uK-6iR" firstAttribute="centerY" secondItem="SWj-az-ShZ" secondAttribute="centerY" id="Bed-XE-P87"/>
                 <constraint firstAttribute="trailing" secondItem="9wc-Dj-4Un" secondAttribute="trailing" id="E3S-b6-iFD"/>
                 <constraint firstItem="Uvz-FO-XPm" firstAttribute="leading" secondItem="zE5-7z-iNz" secondAttribute="leading" constant="16" id="LFa-ow-f6e"/>
                 <constraint firstItem="Uvz-FO-XPm" firstAttribute="top" secondItem="zE5-7z-iNz" secondAttribute="top" constant="16" id="OZR-yh-cZe"/>
                 <constraint firstItem="SWj-az-ShZ" firstAttribute="leading" secondItem="Uvz-FO-XPm" secondAttribute="trailing" constant="8" symbolic="YES" id="P2R-Ib-Zd0"/>
+                <constraint firstItem="5CO-uK-6iR" firstAttribute="height" secondItem="SWj-az-ShZ" secondAttribute="height" id="PDQ-P2-Muz"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="trailing" secondItem="Uvz-FO-XPm" secondAttribute="trailing" id="PI3-6V-w5P"/>
                 <constraint firstItem="9wc-Dj-4Un" firstAttribute="top" secondItem="zE5-7z-iNz" secondAttribute="top" id="PLU-0Y-Ncs"/>
                 <constraint firstAttribute="trailing" secondItem="SWj-az-ShZ" secondAttribute="trailing" constant="16" id="Ug8-04-Rps"/>

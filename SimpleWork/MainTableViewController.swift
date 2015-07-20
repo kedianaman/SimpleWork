@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RemindersListHeaderViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -17,6 +17,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     var calendars = [EKCalendar]()
     var remindersInCalendar = [String : [EKReminder]]()  // calendarIdentifier -> EKReminder
     var selectedSectionIndex: Int?
+    var addingNewReminder: Bool?
     
     var visibleHeaders = [Int: RemindersListHeaderView]()   // section -> headerView
 
@@ -26,7 +27,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = 102
@@ -187,7 +187,11 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 let calendar = calendars[section]
                 let reminders = remindersInCalendar[calendar.calendarIdentifier]
                 if reminders!.count > 0 {
-                    return reminders!.count
+                    if addingNewReminder == true {
+                        return reminders!.count + 1
+                    } else {
+                        return reminders!.count
+                    }
                 } else {
                     return 1
                 }
@@ -206,7 +210,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 reminder = remindersForCalendar[indexPath.row]
             }
         }
-        if reminder != nil {
+        if reminder != nil || addingNewReminder == true {
             if let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as? ReminderTableViewCell {
                 
                 cell.setDueDateText(nil)
@@ -247,6 +251,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         var headerView = visibleHeaders[section]
         if headerView == nil {
             headerView = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderView") as? RemindersListHeaderView
+            headerView?.delegate = self 
             let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "headerViewTapped:")
             headerView!.addGestureRecognizer(tapGestureRecognizer)
         }
@@ -286,5 +291,17 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     func tableView(tableView: UITableView, didEndDisplayingHeaderView view: UIView, forSection section: Int) {
         visibleHeaders.removeValueForKey(section)
     }
+    
+    // MARK: - RemindersListHeaderView Delegate 
+    func headerViewDidSelectAddReminder(_ : RemindersListHeaderView) {
+        addingNewReminder = true
+        let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
+        let indexPathForRow = NSIndexPath(forRow: remindersCount - 1, inSection: selectedSectionIndex!)
+        tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        tableView.scrollEnabled = false
+    }
+    
+
 
 }

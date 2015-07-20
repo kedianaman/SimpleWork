@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol RemindersListHeaderViewDelegate: class {
+    func headerViewDidSelectAddReminder(_ : RemindersListHeaderView)
+}
 class RemindersCountLabel : UILabel {
     override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
         var bounds = super.textRectForBounds(bounds, limitedToNumberOfLines: numberOfLines)
@@ -17,6 +20,13 @@ class RemindersCountLabel : UILabel {
 }
 
 class RemindersListHeaderView: UITableViewHeaderFooterView {
+    
+    weak var delegate: RemindersListHeaderViewDelegate?
+    
+    @IBAction func addReminder() {
+        delegate?.headerViewDidSelectAddReminder(self)
+        
+    }
     
     @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var subtitleTextField: UITextField!
