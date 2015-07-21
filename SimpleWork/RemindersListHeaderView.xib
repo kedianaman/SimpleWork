@@ -24,9 +24,20 @@
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CO-uK-6iR">
                     <rect key="frame" x="476" y="29" width="44" height="44"/>
-                    <state key="normal" title="Add"/>
+                    <state key="normal" title="Add">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
                     <connections>
                         <action selector="addReminder" destination="zE5-7z-iNz" eventType="touchUpInside" id="GTK-o1-B4Y"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MUf-Kq-BbN">
+                    <rect key="frame" x="483" y="36" width="37" height="30"/>
+                    <state key="normal" title="Done">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="doneAddingReminder" destination="zE5-7z-iNz" eventType="touchUpInside" id="asq-W4-Fqs"/>
                     </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SWj-az-ShZ" customClass="RemindersCountLabel" customModule="SimpleWork" customModuleProvider="target">
@@ -47,6 +58,8 @@
             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="SWj-az-ShZ" firstAttribute="leading" secondItem="5CO-uK-6iR" secondAttribute="trailing" constant="20" id="2Nl-xD-HM6"/>
+                <constraint firstItem="SWj-az-ShZ" firstAttribute="leading" secondItem="MUf-Kq-BbN" secondAttribute="trailing" constant="20" id="5EP-FK-MkB"/>
+                <constraint firstItem="MUf-Kq-BbN" firstAttribute="baseline" secondItem="5CO-uK-6iR" secondAttribute="baseline" id="66q-SF-YiZ"/>
                 <constraint firstItem="5CO-uK-6iR" firstAttribute="width" secondItem="SWj-az-ShZ" secondAttribute="width" id="7uy-b6-OWh"/>
                 <constraint firstAttribute="bottom" secondItem="9wc-Dj-4Un" secondAttribute="bottom" id="ARi-N8-15H"/>
                 <constraint firstAttribute="bottom" secondItem="rrF-Tv-rkj" secondAttribute="bottom" constant="16" id="BUA-fC-mTa"/>
@@ -58,17 +71,29 @@
                 <constraint firstItem="5CO-uK-6iR" firstAttribute="height" secondItem="SWj-az-ShZ" secondAttribute="height" id="PDQ-P2-Muz"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="trailing" secondItem="Uvz-FO-XPm" secondAttribute="trailing" id="PI3-6V-w5P"/>
                 <constraint firstItem="9wc-Dj-4Un" firstAttribute="top" secondItem="zE5-7z-iNz" secondAttribute="top" id="PLU-0Y-Ncs"/>
+                <constraint firstItem="MUf-Kq-BbN" firstAttribute="centerY" secondItem="5CO-uK-6iR" secondAttribute="centerY" id="S2I-mT-GyF"/>
                 <constraint firstAttribute="trailing" secondItem="SWj-az-ShZ" secondAttribute="trailing" constant="16" id="Ug8-04-Rps"/>
+                <constraint firstItem="5CO-uK-6iR" firstAttribute="leading" secondItem="MUf-Kq-BbN" secondAttribute="trailing" constant="20" id="jau-A6-zvT"/>
                 <constraint firstItem="9wc-Dj-4Un" firstAttribute="leading" secondItem="zE5-7z-iNz" secondAttribute="leading" id="k9T-UZ-Bxv"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="leading" secondItem="Uvz-FO-XPm" secondAttribute="leading" id="qDK-Gu-Yjs"/>
+                <constraint firstItem="MUf-Kq-BbN" firstAttribute="top" secondItem="5CO-uK-6iR" secondAttribute="top" id="utz-rF-kYL"/>
                 <constraint firstItem="SWj-az-ShZ" firstAttribute="centerY" secondItem="zE5-7z-iNz" secondAttribute="centerY" id="yoL-WN-Q05"/>
                 <constraint firstItem="rrF-Tv-rkj" firstAttribute="top" secondItem="Uvz-FO-XPm" secondAttribute="bottom" constant="8" id="zdo-F5-aeA"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="66q-SF-YiZ"/>
+                    <exclude reference="utz-rF-kYL"/>
+                    <exclude reference="jau-A6-zvT"/>
+                </mask>
+            </variation>
             <connections>
+                <outlet property="addButton" destination="5CO-uK-6iR" id="3bu-xp-QAG"/>
                 <outlet property="countLabel" destination="SWj-az-ShZ" id="NsC-A1-357"/>
                 <outlet property="dimmedView" destination="9wc-Dj-4Un" id="NQg-NQ-hFW"/>
+                <outlet property="doneButton" destination="MUf-Kq-BbN" id="flo-vi-I5r"/>
                 <outlet property="subtitleTextField" destination="rrF-Tv-rkj" id="EVx-4J-I1n"/>
                 <outlet property="titleTextField" destination="Uvz-FO-XPm" id="NLl-hf-vq7"/>
             </connections>

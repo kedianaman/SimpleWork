@@ -20,12 +20,13 @@ class ReminderCellDetailLabel : UILabel {
     
 }
 
-class ReminderTableViewCell: UITableViewCell, UITextFieldDelegate {
+class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
 
     @IBOutlet weak var titleTextView: UITextView! {
         didSet {
             titleTextView.textContainer.lineFragmentPadding = 0
             titleTextView.textContainerInset = UIEdgeInsetsZero
+            titleTextView.delegate = self
         }
     }
     

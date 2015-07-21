@@ -27,6 +27,14 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        let center = NSNotificationCenter.defaultCenter()
+//        let queue = NSOperationQueue.mainQueue()
+//        center.addObserverForName("EKEventStoreChangedNotification", object: eventStore, queue: queue) { (notification) -> Void in
+//            print("something changed")
+//            self.loadCalendars()
+//            self.loadReminders()
+//            self.tableView.reloadData()
+//        }
         tableView.estimatedRowHeight = 100
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = 102
@@ -58,6 +66,10 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             if selectedSectionIndex == nil {
                 // Show the newly selected section
                 selectedSectionIndex = sender.view!.tag
+                if let headerView = tableView.headerViewForSection(selectedSectionIndex!) as? RemindersListHeaderView {
+                    headerView.addButton.enabled = true
+                    headerView.addButton.alpha = 1.0
+                }
                 
                 for (index, header) in visibleHeaders {
                     if index != selectedSectionIndex {
@@ -75,6 +87,10 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 
             } else {
                 // Collapse the currently selected section
+                if let headerView = tableView.headerViewForSection(selectedSectionIndex!) as? RemindersListHeaderView {
+                    headerView.addButton.enabled = false
+                    headerView.addButton.alpha = 0.0
+                }
                 for (_, header) in visibleHeaders {
                     header.setDimmed(false, animated: true)
                 }
@@ -300,6 +316,54 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         tableView.scrollEnabled = false
+        for (_, headers) in visibleHeaders {
+            for gesture in headers.gestureRecognizers! {
+                gesture.enabled = false
+            }
+        }
+        if let remindersCell = tableView.cellForRowAtIndexPath(indexPathForRow) as? ReminderTableViewCell {
+            remindersCell.titleTextView.becomeFirstResponder()
+        }
+        
+    }
+    
+    func headerViewDidFinishAddingReminder(_: RemindersListHeaderView) {
+        addingNewReminder = false
+        tableView.scrollEnabled = true
+        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: selectedSectionIndex!), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        for (_, headers) in visibleHeaders {
+            for gesture in headers.gestureRecognizers! {
+                gesture.enabled = true
+            }
+        }
+        let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
+        print(remindersCount)
+        let indexPathForRow = NSIndexPath(forRow: remindersCount, inSection: selectedSectionIndex!)
+        
+        let reminder = EKReminder(eventStore: eventStore)
+        reminder.calendar = calendars[selectedSectionIndex!]
+        
+        if let remindersCell = tableView.cellForRowAtIndexPath(indexPathForRow) as? ReminderTableViewCell {
+            remindersCell.titleTextView.resignFirstResponder()
+            if let reminderTitle = remindersCell.titleTextView.text {
+                reminder.title = reminderTitle
+            }
+        }
+        if reminder.title != "" {
+            do {
+                try eventStore.saveReminder(reminder, commit: true)
+            } catch _ {
+                print("didn't work")
+            }
+            
+        } else {
+            tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
+       
+
+        
+        
+        
     }
     
 
