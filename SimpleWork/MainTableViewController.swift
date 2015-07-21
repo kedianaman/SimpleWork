@@ -116,21 +116,21 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
             }
             tableView.endUpdates()
             
-            if let selectedSectionIndex = self.selectedSectionIndex {
+            if let selectedSectionIndex = selectedSectionIndex {
                 let rect = self.tableView.rectForSection(selectedSectionIndex)
                 if rect.size.height > tableViewVisibleBounds().size.height {
                     self.tableView.setContentOffset(CGPointMake(0, self.tableView.rectForHeaderInSection(self.selectedSectionIndex!).origin.y), animated: true)
-                    UIView.animateWithDuration(0.3, animations: { () -> Void in
-                        var contentInset = self.defaultContentInset()
-                        contentInset.bottom += rect.size.height
-                        self.tableView.contentInset = contentInset
-                        }, completion: { (completed) -> Void in
-                            self.tableView.contentInset = self.defaultContentInset()
-                    })
                 }
                 else {
                     self.tableView.scrollRectToVisible(rect, animated: true)
                 }
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    var contentInset = self.defaultContentInset()
+                    contentInset.bottom += rect.size.height
+                    self.tableView.contentInset = contentInset
+                    }, completion: { (completed) -> Void in
+                        self.tableView.contentInset = self.defaultContentInset()
+                })
             }
         }
     }
@@ -174,6 +174,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     func loadCalendars() {
         calendars = eventStore.calendarsForEntityType(EKEntityType.Reminder)
+        calendars.sortInPlace { (calendar1, calendar2) -> Bool in
+            return calendar1.title < calendar2.title
+        }
         tableView.reloadData()
     }
     
@@ -313,7 +316,14 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         addingNewReminder = true
         let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
         let indexPathForRow = NSIndexPath(forRow: remindersCount - 1, inSection: selectedSectionIndex!)
+        let calendar = calendars[selectedSectionIndex!]
+        let reminders = remindersInCalendar[calendar.calendarIdentifier]
+        tableView.beginUpdates()
+        if reminders?.count == 0 {
+            tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: selectedSectionIndex!)], withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
         tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
+        tableView.endUpdates()
         tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         tableView.scrollEnabled = false
         for (_, headers) in visibleHeaders {
@@ -327,21 +337,24 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         
     }
     
-    func headerViewDidFinishAddingReminder(_: RemindersListHeaderView) {
+    func headerViewDidFinishAddingReminder(headerView: RemindersListHeaderView) {
         addingNewReminder = false
         tableView.scrollEnabled = true
-        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: selectedSectionIndex!), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         for (_, headers) in visibleHeaders {
             for gesture in headers.gestureRecognizers! {
                 gesture.enabled = true
             }
         }
-        let remindersCount = tableView(tableView, numberOfRowsInSection: selectedSectionIndex!)
+        let calendar = calendars[selectedSectionIndex!]
+        let reminders = remindersInCalendar[calendar.calendarIdentifier]
+
+        let remindersCount = reminders?.count
         print(remindersCount)
-        let indexPathForRow = NSIndexPath(forRow: remindersCount, inSection: selectedSectionIndex!)
+        let indexPathForRow = NSIndexPath(forRow: remindersCount!, inSection: selectedSectionIndex!)
+        
         
         let reminder = EKReminder(eventStore: eventStore)
-        reminder.calendar = calendars[selectedSectionIndex!]
+        reminder.calendar = calendar
         
         if let remindersCell = tableView.cellForRowAtIndexPath(indexPathForRow) as? ReminderTableViewCell {
             remindersCell.titleTextView.resignFirstResponder()
@@ -352,6 +365,8 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         if reminder.title != "" {
             do {
                 try eventStore.saveReminder(reminder, commit: true)
+                remindersInCalendar[calendar.calendarIdentifier]?.append(reminder)
+                headerView.countLabel.text = String(remindersInCalendar[calendar.calendarIdentifier]!.count)
             } catch _ {
                 print("didn't work")
             }
@@ -359,11 +374,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
-       
-
-        
-        
-        
+        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: selectedSectionIndex!), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
 
