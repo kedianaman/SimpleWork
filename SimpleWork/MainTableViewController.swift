@@ -277,6 +277,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 
         if let headerView = headerView {
             headerView.titleTextField.text = calendar.title
+            headerView.subtitleTextField.text = calendar.source.title
             let numReminders = remindersInCalendar[calendar.calendarIdentifier]?.count
             if let numReminders = numReminders {
                 headerView.countLabel.text = String(numReminders)
@@ -311,6 +312,28 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         visibleHeaders.removeValueForKey(section)
     }
     
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let calendar = calendars[indexPath.section]
+            let reminders = remindersInCalendar[calendar.calendarIdentifier]
+            if var reminders = reminders {
+                do {
+                    try eventStore.removeReminder(reminders[indexPath.row], commit: true)
+                    reminders.removeAtIndex(indexPath.row)
+                    remindersInCalendar[calendar.calendarIdentifier] = reminders
+                    if let headerView = tableView.headerViewForSection(selectedSectionIndex!) as? RemindersListHeaderView {
+                        headerView.countLabel.text = String(remindersInCalendar[calendar.calendarIdentifier]!.count)
+                    }
+                } catch _ {
+                    print("didn't work")
+                }
+                
+                tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Automatic)
+            }
+            
+        }
+    }
+    
     // MARK: - RemindersListHeaderView Delegate 
     func headerViewDidSelectAddReminder(_ : RemindersListHeaderView) {
         addingNewReminder = true
@@ -324,8 +347,12 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
+      
         tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         tableView.scrollEnabled = false
+     
+        
+
         for (_, headers) in visibleHeaders {
             for gesture in headers.gestureRecognizers! {
                 gesture.enabled = false
