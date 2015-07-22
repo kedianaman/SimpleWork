@@ -9,7 +9,7 @@
 import UIKit
 import EventKit
 
-class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RemindersListHeaderViewDelegate {
+class MainTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, RemindersListHeaderViewDelegate, ReminderTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -35,7 +35,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
 //            self.loadReminders()
 //            self.tableView.reloadData()
 //        }
-        tableView.estimatedRowHeight = 100
+        tableView.estimatedRowHeight = 49
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = 102
         
@@ -147,6 +147,18 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         return frame
     }
     
+    private func tableViewContentSize() -> CGSize {
+        var contentSize: CGFloat = 0.0
+        for section in 0..<tableView.numberOfSections {
+            var sectionHeight = tableView.rectForHeaderInSection(section).height
+            for row in 0..<tableView.numberOfRowsInSection(section) {
+                sectionHeight += tableView.rectForRowAtIndexPath(NSIndexPath(forRow: row, inSection: section)).height
+            }
+            contentSize += sectionHeight
+        }
+        return CGSizeMake(tableView.bounds.size.width, contentSize)
+    }
+    
     // MARK: - Getting Calendars / Reminders
     
     func checkReminderAuthorizationStatus() {
@@ -231,7 +243,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         if reminder != nil || addingNewReminder == true {
             if let cell = tableView.dequeueReusableCellWithIdentifier("ReminderCell", forIndexPath: indexPath) as? ReminderTableViewCell {
-                
+                cell.delegate = self
                 cell.setDueDateText(nil)
                 cell.setLocationLabelText(nil)
                 
@@ -341,27 +353,39 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let indexPathForRow = NSIndexPath(forRow: remindersCount - 1, inSection: selectedSectionIndex!)
         let calendar = calendars[selectedSectionIndex!]
         let reminders = remindersInCalendar[calendar.calendarIdentifier]
+        
         tableView.beginUpdates()
         if reminders?.count == 0 {
             tableView.deleteRowsAtIndexPaths([NSIndexPath(forRow: 0, inSection: selectedSectionIndex!)], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
         tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
-      
-        tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-        tableView.scrollEnabled = false
-     
         
+        let sectionRect = tableView.rectForSection(selectedSectionIndex!)
+        let headerRect = tableView.rectForHeaderInSection(selectedSectionIndex!)
+        let cellRect = tableView.rectForRowAtIndexPath(indexPathForRow)
+        
+        let contentOffset = CGPointMake(0, sectionRect.origin.y + sectionRect.size.height - headerRect.size.height - cellRect.size.height)
+        tableView.setContentOffset(contentOffset, animated: true)
+        
+        let additionalInset = (tableViewVisibleBounds().size.height - (tableViewContentSize().height - contentOffset.y))
+        if additionalInset > 0 {
+            var inset = defaultContentInset()
+            inset.bottom += additionalInset
+            tableView.contentInset = inset
+        }
+
+        tableView.scrollEnabled = false
 
         for (_, headers) in visibleHeaders {
             for gesture in headers.gestureRecognizers! {
                 gesture.enabled = false
             }
         }
+
         if let remindersCell = tableView.cellForRowAtIndexPath(indexPathForRow) as? ReminderTableViewCell {
             remindersCell.titleTextView.becomeFirstResponder()
         }
-        
     }
     
     func headerViewDidFinishAddingReminder(headerView: RemindersListHeaderView) {
@@ -376,9 +400,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         let reminders = remindersInCalendar[calendar.calendarIdentifier]
 
         let remindersCount = reminders?.count
-        print(remindersCount)
         let indexPathForRow = NSIndexPath(forRow: remindersCount!, inSection: selectedSectionIndex!)
-        
         
         let reminder = EKReminder(eventStore: eventStore)
         reminder.calendar = calendar
@@ -398,12 +420,52 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 print("didn't work")
             }
             
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                let maxContentOffset = self.tableViewContentSize().height - self.tableViewVisibleBounds().height
+                if self.tableView.contentOffset.y > maxContentOffset {
+                    self.tableView.contentOffset = CGPointMake(0, maxContentOffset)
+                }
+                else {
+                    // Show entire section if possible.
+                    // Otherwise, scroll the section with UITableViewScrollPosition.Bottom
+                    let sectionRect = self.tableView.rectForSection(self.selectedSectionIndex!)
+                    if sectionRect.height < self.tableViewVisibleBounds().height {
+                        self.tableView.scrollRectToVisible(sectionRect, animated: false)
+                    }
+                    else {
+                        self.tableView.scrollToRowAtIndexPath(indexPathForRow, atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                    }
+                }
+                }) { (completed) -> Void in
+                    self.tableView.contentInset = self.defaultContentInset()
+            }
         } else {
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                let maxContentOffset = self.tableViewContentSize().height - self.tableViewVisibleBounds().height - self.tableView.rectForRowAtIndexPath(indexPathForRow).height
+                if self.tableView.contentOffset.y > maxContentOffset {
+                    self.tableView.contentOffset = CGPointMake(0, maxContentOffset)
+                }
+                }) { (completed) -> Void in
+                    self.tableView.contentInset = self.defaultContentInset()
+            }
             tableView.deleteRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         }
-        tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: 0, inSection: selectedSectionIndex!), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
     }
     
-
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        print(scrollView.contentOffset)
+    }
+    
+    // MARK: - ReminderTableViewCell Delegate
+    
+    func reminderCellDidBeginEditing(reminderCell: ReminderTableViewCell) {
+        print("began editing")
+//        tableView.indexPathForCell(reminderCell)
+    }
+    
+    func reminderCellDidFinishEditing(reminderCell: ReminderTableViewCell) {
+        print("finished editing")
+        
+    }
 
 }

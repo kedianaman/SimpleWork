@@ -46,7 +46,7 @@
                                                     <rect key="frame" x="56" y="12" width="520" height="41"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences" keyboardAppearance="alert" returnKeyType="done"/>
                                                 </textView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="Due date label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RED-eV-4c9" customClass="ReminderCellDetailLabel" customModule="SimpleWork" customModuleProvider="target">
                                                     <rect key="frame" x="56" y="53" width="520" height="18"/>
@@ -144,8 +144,8 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="k8V-Dt-LHh" firstAttribute="height" secondItem="L6Y-ZV-l9w" secondAttribute="height" multiplier="2" id="8Dc-sT-Udb"/>
                             <constraint firstItem="k8V-Dt-LHh" firstAttribute="leading" secondItem="L6Y-ZV-l9w" secondAttribute="leading" id="LTH-CX-Z9V"/>
+                            <constraint firstItem="k8V-Dt-LHh" firstAttribute="height" secondItem="L6Y-ZV-l9w" secondAttribute="height" multiplier="2" id="N3V-Qv-3le"/>
                             <constraint firstAttribute="trailing" secondItem="k8V-Dt-LHh" secondAttribute="trailing" id="UYq-Mw-Oxf"/>
                             <constraint firstItem="k8V-Dt-LHh" firstAttribute="top" secondItem="nJz-Tp-DME" secondAttribute="bottom" id="zxq-pH-dwK"/>
                         </constraints>

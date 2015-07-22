@@ -8,6 +8,11 @@
 
 import UIKit
 
+protocol ReminderTableViewCellDelegate: class {
+    func reminderCellDidBeginEditing(_:ReminderTableViewCell)
+    func reminderCellDidFinishEditing(_:ReminderTableViewCell)
+}
+
 class ReminderCellDetailLabel : UILabel {
     
     override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines numberOfLines: Int) -> CGRect {
@@ -22,6 +27,8 @@ class ReminderCellDetailLabel : UILabel {
 
 class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
 
+    weak var delegate: ReminderTableViewCellDelegate?
+    
     @IBOutlet weak var titleTextView: UITextView! {
         didSet {
             titleTextView.textContainer.lineFragmentPadding = 0
@@ -30,7 +37,22 @@ class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    func textViewDidBeginEditing(textView: UITextView) {
+        delegate?.reminderCellDidBeginEditing(self)
+        
+    }
     
+    func textViewDidEndEditing(textView: UITextView) {
+        delegate?.reminderCellDidFinishEditing(self)
+    }
+  
     @IBOutlet private weak var dueDateLabel: UILabel!
     @IBOutlet private weak var locationLabel: UILabel!
     
