@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8152.3" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8152.3" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Vcx-qw-8Sw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8124.4"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -112,7 +112,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" text="No Reminders" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H0n-eH-TqI" customClass="ReminderCellDetailLabel" customModule="SimpleWork" customModuleProvider="target">
-                                                    <rect key="frame" x="8" y="8" width="584" height="27.5"/>
+                                                    <rect key="frame" x="8" y="13" width="584" height="17.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" id="pG6-pS-r0c"/>
                                                     </constraints>
@@ -129,8 +129,8 @@
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="H0n-eH-TqI" secondAttribute="trailing" id="Iy0-GZ-tNG"/>
                                                 <constraint firstItem="H0n-eH-TqI" firstAttribute="leading" secondItem="0UX-jM-fo1" secondAttribute="leadingMargin" id="QbC-kf-Jxc"/>
-                                                <constraint firstItem="H0n-eH-TqI" firstAttribute="top" secondItem="0UX-jM-fo1" secondAttribute="topMargin" id="beZ-Ow-O9r"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="H0n-eH-TqI" secondAttribute="bottom" id="mH5-6i-YFD"/>
+                                                <constraint firstItem="H0n-eH-TqI" firstAttribute="top" secondItem="0UX-jM-fo1" secondAttribute="topMargin" constant="5" id="beZ-Ow-O9r"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="H0n-eH-TqI" secondAttribute="bottom" constant="5" id="mH5-6i-YFD"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>

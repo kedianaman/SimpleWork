@@ -16,8 +16,10 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     let eventStore = EKEventStore()
     var calendars = [EKCalendar]()
     var remindersInCalendar = [String : [EKReminder]]()  // calendarIdentifier -> EKReminder
+
     var selectedSectionIndex: Int?
     var addingNewReminder: Bool?
+    var editingTextAtIndexPath: NSIndexPath?
     
     var visibleHeaders = [Int: RemindersListHeaderView]()   // section -> headerView
 
@@ -27,14 +29,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let center = NSNotificationCenter.defaultCenter()
-//        let queue = NSOperationQueue.mainQueue()
-//        center.addObserverForName("EKEventStoreChangedNotification", object: eventStore, queue: queue) { (notification) -> Void in
-//            print("something changed")
-//            self.loadCalendars()
-//            self.loadReminders()
-//            self.tableView.reloadData()
-//        }
+
         tableView.estimatedRowHeight = 49
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.sectionHeaderHeight = 102
@@ -44,6 +39,9 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.separatorColor = UIColor(white: 0.0, alpha: 0.25)
         // TODO: Remove 56 magic number
         tableView.separatorInset = UIEdgeInsetsMake(0, 56, 0, 0)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardDidShow:"), name: UIKeyboardDidShowNotification, object: nil)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -361,22 +359,6 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         tableView.insertRowsAtIndexPaths([indexPathForRow], withRowAnimation: UITableViewRowAnimation.Automatic)
         tableView.endUpdates()
         
-        let sectionRect = tableView.rectForSection(selectedSectionIndex!)
-        let headerRect = tableView.rectForHeaderInSection(selectedSectionIndex!)
-        let cellRect = tableView.rectForRowAtIndexPath(indexPathForRow)
-        
-        let contentOffset = CGPointMake(0, sectionRect.origin.y + sectionRect.size.height - headerRect.size.height - cellRect.size.height)
-        tableView.setContentOffset(contentOffset, animated: true)
-        
-        let additionalInset = (tableViewVisibleBounds().size.height - (tableViewContentSize().height - contentOffset.y))
-        if additionalInset > 0 {
-            var inset = defaultContentInset()
-            inset.bottom += additionalInset
-            tableView.contentInset = inset
-        }
-
-        tableView.scrollEnabled = false
-
         for (_, headers) in visibleHeaders {
             for gesture in headers.gestureRecognizers! {
                 gesture.enabled = false
@@ -384,6 +366,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
         }
 
         if let remindersCell = tableView.cellForRowAtIndexPath(indexPathForRow) as? ReminderTableViewCell {
+            editingTextAtIndexPath = indexPathForRow
             remindersCell.titleTextView.becomeFirstResponder()
         }
     }
@@ -453,19 +436,43 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        print(scrollView.contentOffset)
+//        print(scrollView.contentOffset)
     }
     
     // MARK: - ReminderTableViewCell Delegate
     
     func reminderCellDidBeginEditing(reminderCell: ReminderTableViewCell) {
         print("began editing")
-//        tableView.indexPathForCell(reminderCell)
     }
     
     func reminderCellDidFinishEditing(reminderCell: ReminderTableViewCell) {
         print("finished editing")
-        
+        editingTextAtIndexPath = nil
     }
+    
+    func keyboardWillShow(notification: NSNotification) {
+        let info = notification.userInfo as! [NSString : NSObject]
+        let frame = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        let animationDuration = (info[UIKeyboardAnimationDurationUserInfoKey] as! NSNumber).doubleValue
+        let animationOptions = UIViewAnimationOptions(rawValue:UInt((info[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+        
+        var inset = defaultContentInset()
+        inset.bottom += frame.height
+        tableView.contentInset = inset
+        
+        if let editingTextAtIndexPath = editingTextAtIndexPath {
+            UIView.animateWithDuration(animationDuration, delay: 0.0, options: animationOptions, animations: { () -> Void in
+                self.tableView.scrollToRowAtIndexPath(editingTextAtIndexPath, atScrollPosition: UITableViewScrollPosition.None, animated: false)
+                }, completion: nil)
+        }
+    }
+
+    func keyboardDidShow(notification: NSNotification) {
+//        if let selectedSectionIndex = selectedSectionIndex {
+//            
+//        }
+    }
+    
+    
 
 }

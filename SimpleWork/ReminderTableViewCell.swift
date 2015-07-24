@@ -37,6 +37,10 @@ class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
+    override func awakeFromNib() {
+        self.tintColor = UIColor.blackColor()
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         if(text == "\n") {
             textView.resignFirstResponder()
@@ -44,6 +48,7 @@ class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
         }
         return true
     }
+    
     func textViewDidBeginEditing(textView: UITextView) {
         delegate?.reminderCellDidBeginEditing(self)
         
