@@ -67,6 +67,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 if let headerView = tableView.headerViewForSection(selectedSectionIndex!) as? RemindersListHeaderView {
                     headerView.addButton.enabled = true
                     headerView.addButton.alpha = 1.0
+                    headerView.countLabel.alpha = 0.0
                 }
                 
                 for (index, header) in visibleHeaders {
@@ -88,6 +89,7 @@ class MainTableViewController: UIViewController, UITableViewDelegate, UITableVie
                 if let headerView = tableView.headerViewForSection(selectedSectionIndex!) as? RemindersListHeaderView {
                     headerView.addButton.enabled = false
                     headerView.addButton.alpha = 0.0
+                    headerView.countLabel.alpha = 1.0
                 }
                 for (_, header) in visibleHeaders {
                     header.setDimmed(false, animated: true)

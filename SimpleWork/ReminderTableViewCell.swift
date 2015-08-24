@@ -76,7 +76,7 @@ class ReminderTableViewCell: UITableViewCell, UITextViewDelegate {
     
     @IBAction func checkBoxTapped(sender: UIButton) {
         if sender.imageForState(.Normal) == nil {
-            sender.setImage(UIImage(named: "Checkmark.png"), forState: .Normal)
+            sender.setImage(UIImage(named: "SelectedBox.png"), forState: .Normal)
         } else {
             sender.setImage(nil, forState: .Normal)
             

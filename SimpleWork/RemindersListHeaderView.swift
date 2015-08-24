@@ -56,6 +56,12 @@ class RemindersListHeaderView: UITableViewHeaderFooterView {
         countLabel.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
         countLabel.layer.cornerRadius = countLabel.frame.size.height/2.0
         countLabel.layer.masksToBounds = true
+        doneButton.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        doneButton.layer.cornerRadius = countLabel.frame.size.height/2.0
+        doneButton.layer.masksToBounds = true
+        addButton.backgroundColor = UIColor(white: 0.0, alpha: 0.1)
+        addButton.layer.cornerRadius = countLabel.frame.size.height/2.0
+        addButton.layer.masksToBounds = true
         doneButton.enabled = false
         doneButton.alpha = 0.0
         addButton.enabled = false
